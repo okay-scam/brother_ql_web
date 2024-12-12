@@ -265,7 +265,7 @@ def print_text():
         context["label_size"],
         red=red,
         threshold=context["threshold"],
-        cut=True,
+        cut=request.forms.get("cut", "true").lower() == "true",
         rotate=rotate,
     )
 

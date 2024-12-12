@@ -128,6 +128,11 @@
             </div>
             <div id="collapse3" class="panel-collapse collapse">
               <div class="chooser panel-body">
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" id="cutLabel" checked onChange="onCutChange()"> Auto-cut
+                </label>
+              </div>
               <label for="marginTop">Margin Top:</label>
               <div class="input-group marginsTopBottom">
                 <input id="marginTop" class="form-control" type="number" min="0" max="200" value="24" onChange="preview()" required>    <span class="input-group-addon">%</span>
@@ -161,6 +166,9 @@
         <label for="previewImg">Label Preview:</label><br />
         <img id="previewImg" style="border: 1px solid #444; max-height: 350px; width: auto; max-width: 100%; margin-bottom: 10px;"/>
         <p>Printed size w/o margins: <span id="labelWidth">?</span> cm x <span id="labelHeight">?</span> cm</p>
+        <p class="auto-cut-status text-muted" style="margin-bottom: 10px;">
+          Auto-cut: <span id="autoCutStatus">ON</span>
+        </p>
         <button id="printButton" type="button" class="btn btn-primary btn-block btn-lg" onClick="print()">
           <span class="glyphicon glyphicon-print" aria-hidden="true"></span> Print
         </button>
@@ -178,6 +186,12 @@
 {% endblock %}
 
 {% block javascript %}
+function onCutChange() {
+  const status = $('#cutLabel').is(':checked') ? 'ON' : 'OFF';
+  $('#autoCutStatus').text(status);
+  preview();
+}
+
 var text = $('#labelText');
 
 function formData() {
@@ -194,7 +208,8 @@ function formData() {
     margin_bottom: $('#marginBottom').val(),
     margin_left:   $('#marginLeft').val(),
     margin_right:  $('#marginRight').val(),
-    printer:     $('#printerSelect').val()
+    printer:     $('#printerSelect').val(),
+    cut:        $('#cutLabel').is(':checked')
   }
 }
 
