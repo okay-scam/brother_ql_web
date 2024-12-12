@@ -16,6 +16,31 @@
           <div class="panel panel-default">
             <div class="panel-heading">
               <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapse0">
+                <span class="glyphicon glyphicon-print" aria-hidden="true"></span> Printer Selection</a>
+                <span class="selected-printer text-muted" style="margin-left: 10px; font-size: 0.9em">
+                  <span id="selectedPrinterName">{{ printers[default_printer]["NAME"] }}</span>
+                </span>
+              </h4>
+            </div>
+            <div id="collapse0" class="panel-collapse collapse">
+              <div class="chooser panel-body">
+                <label for="printerSelect" style="display: none">Printer:</label>
+                <select class="form-control" id="printerSelect" onChange="onPrinterChange()">
+                  {% for printer in printers %}
+                    <option value="{{ loop.index0 }}" 
+                            data-label="{{ printer.DEFAULT_LABEL }}"
+                            {% if loop.index0 == default_printer %}selected{% endif %}>
+                      {{ printer.NAME }}
+                    </option>
+                  {% endfor %}
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h4 class="panel-title">
                 <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">
                 <span class="glyphicon glyphicon-file" aria-hidden="true"></span> Label Size</a>
               </h4>
@@ -136,7 +161,6 @@
 var text = $('#labelText');
 
 function formData() {
-  //var text = $('#labelText').val().replace(/\n/g, "%0A");
   var text = $('#labelText').val();
   if (text == '') text = ' ';
   return {
@@ -149,7 +173,8 @@ function formData() {
     margin_top:    $('#marginTop').val(),
     margin_bottom: $('#marginBottom').val(),
     margin_left:   $('#marginLeft').val(),
-    margin_right:  $('#marginRight').val()
+    margin_right:  $('#marginRight').val(),
+    printer:     $('#printerSelect').val()
   }
 }
 

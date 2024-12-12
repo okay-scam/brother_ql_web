@@ -1,0 +1,10 @@
+services:
+  web:
+    container_name: brother_ql_web
+    build: .
+    ports:
+      - "8013:8013"
+    volumes:
+      - ./config.json:/app/config.json:ro
+    environment:
+      - PYTHONUNBUFFERED=1 
