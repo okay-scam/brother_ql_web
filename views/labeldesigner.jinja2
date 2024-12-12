@@ -19,20 +19,35 @@
                 <a data-toggle="collapse" data-parent="#accordion" href="#collapse0">
                 <span class="glyphicon glyphicon-print" aria-hidden="true"></span> Printer Selection</a>
                 <span class="selected-printer text-muted" style="margin-left: 10px; font-size: 0.9em">
-                  <span id="selectedPrinterName">{{ printers[default_printer]["NAME"] }}</span>
+                  <span id="selectedPrinterName">
+                    {% set printer = printers[default_printer] %}
+                    {{ printer.CATEGORY }} - {{ printer.DISPLAY_NAME }}
+                  </span>
                 </span>
               </h4>
             </div>
-            <div id="collapse0" class="panel-collapse collapse">
+            <div id="collapse0" class="panel-collapse collapse in">
               <div class="chooser panel-body">
                 <label for="printerSelect" style="display: none">Printer:</label>
                 <select class="form-control" id="printerSelect" onChange="onPrinterChange()">
+                  {% set categories = {} %}
                   {% for printer in printers %}
-                    <option value="{{ loop.index0 }}" 
-                            data-label="{{ printer.DEFAULT_LABEL }}"
-                            {% if loop.index0 == default_printer %}selected{% endif %}>
-                      {{ printer.NAME }}
-                    </option>
+                    {% if printer.CATEGORY not in categories %}
+                      {% set _ = categories.update({printer.CATEGORY: []}) %}
+                    {% endif %}
+                    {% set _ = categories[printer.CATEGORY].append(printer) %}
+                  {% endfor %}
+                  {% for category, category_printers in categories.items() %}
+                  <optgroup label="{{ category }}">
+                    {% for printer in category_printers %}
+                      {% set printer_index = printers.index(printer) %}
+                      <option value="{{ printer_index }}" 
+                              data-label="{{ printer.DEFAULT_LABEL }}"
+                              {% if printer_index == default_printer %}selected{% endif %}>
+                        {{ printer.DISPLAY_NAME }}
+                      </option>
+                    {% endfor %}
+                  </optgroup>
                   {% endfor %}
                 </select>
               </div>
@@ -75,7 +90,7 @@
                 </a>
               </h4>
             </div>
-            <div id="collapse2" class="panel-collapse collapse in">
+            <div id="collapse2" class="panel-collapse collapse">
               <div class="chooser panel-body">
               <label for="fontFamily">Font Family:</label>
               <select class="form-control" id="fontFamily" onChange="preview()">

@@ -4,7 +4,9 @@ function onPrinterChange() {
     const defaultLabel = selectedOption.getAttribute('data-label');
 
     // Update the selected printer name display
-    document.getElementById('selectedPrinterName').textContent = selectedOption.text;
+    const location = selectedOption.parentElement.label;
+    document.getElementById('selectedPrinterName').textContent =
+        `${location} - ${selectedOption.text}`;
 
     // Set the label size to match the printer's default
     const labelSizeSelect = document.getElementById('labelSize');
