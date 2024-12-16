@@ -12,7 +12,7 @@ import random
 import sys
 from io import BytesIO
 
-from bottle import get, post, redirect, request, response, route, run, static_file
+from bottle import get, post, request, response, route, run, static_file
 from bottle import jinja2_view as view
 from brother_ql import BrotherQLRaster, create_label
 from brother_ql.backends import backend_factory, guess_backend
@@ -41,18 +41,8 @@ except FileNotFoundError:
 
 
 @route("/")
-def index():
-    redirect("/labeldesigner")
-
-
-@route("/static/<filename:path>")
-def serve_static(filename):
-    return static_file(filename, root="./static")
-
-
-@route("/labeldesigner")
 @view("labeldesigner.jinja2")
-def labeldesigner():
+def index():
     font_family_names = sorted(list(FONTS.keys()))
     printers = CONFIG.get("PRINTERS", [])
     default_printer = CONFIG.get("DEFAULT_PRINTER", 0)
@@ -78,6 +68,11 @@ def labeldesigner():
         "website": CONFIG["WEBSITE"],
         "label": CONFIG["LABEL"],
     }
+
+
+@route("/static/<filename:path>")
+def serve_static(filename):
+    return static_file(filename, root="./static")
 
 
 def get_label_context(request):
