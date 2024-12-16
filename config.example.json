@@ -5,12 +5,34 @@
     "LOGLEVEL": "WARNING",
     "ADDITIONAL_FONT_FOLDER": false
   },
-  "PRINTER": {
-    "MODEL": "QL-500",
-    "PRINTER": "file:///dev/usb/lp1"
-  },
+  "PRINTERS": [
+    {
+      "NAME": "Location1 Small",
+      "CATEGORY": "Location1",
+      "DISPLAY_NAME": "Small",
+      "MODEL": "QL-820NWB",
+      "PRINTER": "tcp://192.168.1.100",
+      "DEFAULT_LABEL": "17x54"
+    },
+    {
+      "NAME": "Location1 Large",
+      "CATEGORY": "Location1",
+      "DISPLAY_NAME": "Large",
+      "MODEL": "QL-820NWB",
+      "PRINTER": "tcp://192.168.1.101",
+      "DEFAULT_LABEL": "62x100"
+    },
+    {
+      "NAME": "Location2 Small",
+      "CATEGORY": "Location2",
+      "DISPLAY_NAME": "Small",
+      "MODEL": "QL-820NWB",
+      "PRINTER": "tcp://192.168.1.102",
+      "DEFAULT_LABEL": "17x54"
+    }
+  ],
+  "DEFAULT_PRINTER": 0,
   "LABEL": {
-    "DEFAULT_SIZE": "62",
     "DEFAULT_ORIENTATION": "standard",
     "DEFAULT_FONT_SIZE": 70,
     "DEFAULT_FONTS": [
