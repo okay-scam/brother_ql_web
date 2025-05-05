@@ -11,6 +11,53 @@
     <link rel="stylesheet" href="/static/css/custom.css">
 
     <title>{{ website['HTML_TITLE'] }} | Brother QL</title>
+    <style>
+      /* Custom button colors based on printer category */
+      .btn-category-east {
+        background-color: #28a745; /* Green */
+        border-color: #28a745;
+        color: white;
+      }
+      .btn-category-east:hover, .btn-category-east:focus, .btn-category-east:active {
+        background-color: #218838;
+        border-color: #1e7e34;
+        color: white;
+      }
+      .btn-category-main {
+        background-color: #007bff; /* Blue */
+        border-color: #007bff;
+        color: white;
+      }
+      .btn-category-main:hover, .btn-category-main:focus, .btn-category-main:active {
+        background-color: #0069d9;
+        border-color: #0062cc;
+        color: white;
+      }
+      /* Add more styles for other categories if needed */
+
+      /* Custom navbar colors based on printer category */
+      .navbar.navbar-category-east {
+        background-color: #dcedc8; /* Pastel Green */
+        border-color: #c5e1a5;
+      }
+      .navbar.navbar-category-main {
+        background-color: #d0ebf5; /* Pastel Blue */
+        border-color: #b3e0f2;
+      }
+      /* Ensure navbar text/links remain visible (override navbar-inverse) */
+      .navbar-category-east .navbar-brand,
+      .navbar-category-east .navbar-nav > li > a,
+      .navbar-category-main .navbar-brand,
+      .navbar-category-main .navbar-nav > li > a {
+        color: #333; /* Darker text color for contrast */
+      }
+      .navbar-category-east .navbar-brand:hover,
+      .navbar-category-east .navbar-nav > li > a:hover,
+      .navbar-category-main .navbar-brand:hover,
+      .navbar-category-main .navbar-nav > li > a:hover {
+          color: #000; /* Even darker on hover */
+      }
+    </style>
   </head>
   <body>
     <nav class="navbar navbar-inverse navbar-fixed-top">
