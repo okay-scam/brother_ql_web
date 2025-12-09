@@ -128,6 +128,10 @@
             </div>
             <div id="collapse3" class="panel-collapse collapse">
               <div class="chooser panel-body">
+              <div class="form-group">
+                <label for="printQuantity">Quantity:</label>
+                <input id="printQuantity" class="form-control" type="number" min="1" max="100" value="1" onChange="onQuantityChange()" required>
+              </div>
               <div class="checkbox">
                 <label>
                   <input type="checkbox" id="cutLabel" checked onChange="onCutChange()"> Auto-cut
@@ -186,6 +190,12 @@
 {% endblock %}
 
 {% block javascript %}
+function onQuantityChange() {
+  const quantity = $('#printQuantity').val();
+  const printText = quantity > 1 ? ' Print ' + quantity + ' Labels' : ' Print';
+  $('#printButton').html('<span class="glyphicon glyphicon-print" aria-hidden="true"></span>' + printText);
+}
+
 function onCutChange() {
   const status = $('#cutLabel').is(':checked') ? 'ON' : 'OFF';
   $('#autoCutStatus').text(status);
@@ -209,6 +219,7 @@ function formData() {
     margin_left:   $('#marginLeft').val(),
     margin_right:  $('#marginRight').val(),
     printer:     $('#printerSelect').val(),
+    quantity:    $('#printQuantity').val(),
     cut:        $('#cutLabel').is(':checked')
   }
 }
@@ -247,7 +258,9 @@ function setStatus(data) {
 
 function print() {
   $('#printButton').prop('disabled', true);
-  $('#statusPanel').html('<div id="statusBox" class="alert alert-info" role="alert"><i class="glyphicon glyphicon-hourglass"></i><span>Processing print request...</span></div>');
+  var quantity = $('#printQuantity').val();
+  var quantityText = quantity > 1 ? ' (' + quantity + ' copies)' : '';
+  $('#statusPanel').html('<div id="statusBox" class="alert alert-info" role="alert"><i class="glyphicon glyphicon-hourglass"></i><span>Processing print request' + quantityText + '...</span></div>');
   $.ajax({
     type:     'POST',
     dataType: 'json',

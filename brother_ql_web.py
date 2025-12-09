@@ -229,6 +229,11 @@ def print_text():
         return return_dict
 
     # Get selected printer
+    try:
+        quantity = int(request.forms.get("quantity", 1))
+    except (ValueError, TypeError):
+        quantity = 1
+
     printer_index = int(request.forms.get("printer", CONFIG.get("DEFAULT_PRINTER", 0)))
     printers = CONFIG.get("PRINTERS", [])
 
@@ -267,7 +272,8 @@ def print_text():
     if not DEBUG:
         try:
             be = BACKEND_CLASS(selected_printer["PRINTER"])
-            be.write(qlr.data)
+            for _ in range(quantity):
+                be.write(qlr.data)
             be.dispose()
             del be
         except Exception as e:
